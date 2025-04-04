@@ -1,0 +1,11 @@
+<input
+    type="range"
+    min="0"
+    max="100"
+    step="1"
+    [value]="50"
+    (input)="updateValue($event)"
+    class="h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-thumb"
+    >
+    <br>
+    <label>{{label()}}</label>
