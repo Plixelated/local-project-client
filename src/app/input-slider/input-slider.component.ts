@@ -1,4 +1,5 @@
-import { Component,computed,signal} from '@angular/core';
+import { Component,computed,Input,signal} from '@angular/core';
+
 
 @Component({
   selector: 'app-input-slider',
@@ -8,7 +9,25 @@ import { Component,computed,signal} from '@angular/core';
 })
 export class InputSliderComponent {
 
-    value = signal(50);
+
+    @Input() config!: {
+      min:number; 
+      max: number; 
+      step:number;
+    };
+
+    @Input() formatting!:{
+      isPercent:boolean
+    }
+
+    @Input() labels!: {
+      title:string;
+      desc:string;
+      prefix?:string;
+      suffix?:string;
+    }
+
+    value = signal(25);
     label = computed(()=> `The input is ${this.value()}`);
     
     updateValue(event:Event){
