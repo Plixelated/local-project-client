@@ -1,11 +1,17 @@
-<input
+<div class="flex flex-col items-center justify-center m-10">
+    <span class="text-3xl font-semibold m-5">Test</span>
+    <input
     type="range"
-    min="0"
-    max="100"
-    step="1"
-    [value]="50"
+    [min]="config.min"
+    [max]="config.max"
+    [step]="config.step"
+    [value]="value()"
     (input)="updateValue($event)"
-    class="h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-thumb"
+    class="slider-style"
     >
-    <br>
-    <label>{{label()}}</label>
+
+    <div class="flex flex-row justify-center mt-4">
+    <label class="text-md mr-1">You Have Currently Selected </label>
+    <label class="text-md font-semibold text-purple-400">{{label()}}</label>
+    </div>
+</div>

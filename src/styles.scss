@@ -1,1 +1,14 @@
 @use "tailwindcss" as *;
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+$foreground-color: #292929 !default;
+$bg-color: #000000  !default;
+$body-color: #121212  !default;
+$highlight-color: #c198ff  !default;
+$button-highlight:rgba(255,255,255,0.12)  !default;
+$primary-font-color: rgba(255,255,255,0.87)  !default;
+$secondary-font-color: rgba(255,255,255,0.6)  !default;
+
+body{
+  font-family: 'Source Sans 3';
+}
