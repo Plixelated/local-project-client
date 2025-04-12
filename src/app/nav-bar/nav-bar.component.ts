@@ -4,7 +4,7 @@ import { InputSliderComponent } from "../input-slider/input-slider.component";
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [RouterLink, InputSliderComponent],
+  imports: [RouterLink],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })

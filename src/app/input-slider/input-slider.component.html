@@ -1,17 +1,21 @@
-<div class="flex flex-col items-center justify-center m-10">
-    <span class="text-3xl font-semibold m-5">Test</span>
-    <input
-    type="range"
-    [min]="config.min"
-    [max]="config.max"
-    [step]="config.step"
-    [value]="value()"
-    (input)="updateValue($event)"
-    class="slider-style"
-    >
-
+<div class="flex flex-col flex-shrink-0 items-center justify-center m-10 w-full min-w-[760px]">
+    <span class="text-2xl text-center font-semibold m-5">{{labels.title}}</span>
+    <div class="flex flex-row items-center">
+        <span class="mx-5">{{config.min}}</span>
+            <input
+            type="range"
+            [min]="config.min"
+            [max]="config.max"
+            [step]="config.step"
+            [value]="rangeValue()"
+            (input)="onValueChange($event)"
+            class="slider-style"
+            >
+        <span class="mx-5">{{config.max}}</span>
+    </div>  
     <div class="flex flex-row justify-center mt-4">
-    <label class="text-md mr-1">You Have Currently Selected </label>
+    <label class="text-md mx-1.5">You Have Currently Selected </label>
     <label class="text-md font-semibold text-purple-400">{{label()}}</label>
     </div>
+    <span class="text-center mt-6 px-45 text-sm desc-text">{{labels.desc}}</span>
 </div>

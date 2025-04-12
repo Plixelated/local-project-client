@@ -11,4 +11,6 @@ $secondary-font-color: rgba(255,255,255,0.6)  !default;
 
 body{
   font-family: 'Source Sans 3';
+  color: $primary-font-color;
+  background-color: $bg-color;
 }

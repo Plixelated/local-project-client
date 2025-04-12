@@ -1,5 +1,13 @@
 @use '../../styles/' as *;
 
+:host{
+  color:$primary-font-color;
+}
+
+.desc-text{
+  color:$secondary-font-color;
+}
+
 /*Custom Slider*/
 .slider-style{
     appearance: none;

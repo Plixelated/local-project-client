@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { RouterOutlet } from '@angular/router';
+import { InputWrapperComponent } from './input-wrapper/input-wrapper.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { RouterOutlet } from '@angular/router';
   imports: [
     NavBarComponent,
     RouterOutlet,
-  ]
+    InputWrapperComponent,
+]
 })
 export class AppComponent {
   title = 'project-client';
