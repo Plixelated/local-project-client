@@ -17,16 +17,26 @@ export class InputWrapperComponent {
   configData = configData;
   textData = textData;
 
+  calculation = 1;
+  reveal = false;
+
 
   getAllValues(){
-    //Dict Value to store in J
+    //Dict Value to store in JSON
     const result: Record<string,number>={}
+    let total = 1;
 
     this.sliderInputs.forEach(input => {
       result[input.config.label] = input.rangeValue();
+      total *= input.rangeValue();
   });
 
+    this.calculation = total;
+    this.reveal = this.calculation > 1;
+
     console.log(result);
+    console.log(this.calculation)
+
     return result;
   }
 
