@@ -53,11 +53,11 @@ export const textData = [
       ];
        
 export const configData=[
-        {min:0,max:1000,step:1, label:"r*",default:300},
-        {min:0,max:2000,step:1, label:"fp"},
-        {min:0,max:3000,step:1, label:"ne"},
-        {min:0,max:3000,step:1, label:"fl"},
-        {min:0,max:3000,step:1, label:"fi"},
-        {min:0,max:3000,step:1, label:"fc"},
-        {min:0,max:3000,step:1, label:"L"},
+        {min:0.1,max:3,step:0.1, label:"r*",default:0.5},
+        {min:1,max:100,step:1, label:"fp"},
+        {min:0.01,max:10,step:0.01, label:"ne"},
+        {min:1,max:100,step:1, label:"fl"},
+        {min:1,max:100,step:1, label:"fi"},
+        {min:1,max:100,step:1, label:"fc"},
+        {min:1,max:100000000000,step:10000, label:"L", default:50000000000}, //Use scaled values to reach max value
       ]

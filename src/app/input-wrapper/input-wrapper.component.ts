@@ -1,6 +1,9 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { InputSliderComponent } from "../input-slider/input-slider.component";
 import { textData,configData } from "../data/data"
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-input-wrapper',
@@ -9,6 +12,8 @@ import { textData,configData } from "../data/data"
   styleUrl: './input-wrapper.component.scss'
 })
 export class InputWrapperComponent {
+
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute){}
 
   //Gets Child Component
   @ViewChildren(InputSliderComponent) sliderInputs!: QueryList<InputSliderComponent>;
@@ -35,9 +40,43 @@ export class InputWrapperComponent {
     this.reveal = this.calculation > 1;
 
     console.log(result);
-    console.log(this.calculation)
+    // console.log(this.calculation)
+
+    this.submitValues(result);
 
     return result;
   }
+
+  submitValues(results: Record<string,number>){
+    const submission_token = localStorage.getItem("DESubToken");
+    const submission = {
+      rateStars: results["r*"],
+      frequencyPlanets: results["fp"],
+      nearEarth: results["ne"],
+      fractionLife: results["fl"],
+      fractionIntelligence: results["fi"],
+      fractionCommunication: results["fc"],
+      length: results["L"],
+      entryOrigin: submission_token
+    }
+    console.log(submission);
+    this.http.post(`${environment.baseURL}api/Submission/CreateSubmission/`, submission).subscribe({
+      next:(res) =>{
+        console.log(res)
+      },
+      error:(e) => console.error(e)
+    })
+
+  }
+
+  // getValues(){
+  //   this.http.get(`${environment.baseURL}api/Submission/GetAllValues`).subscribe({
+  //     next:(res) =>{
+  //       console.log(res)
+  //     },
+  //     error:(e) => console.error(e)
+  //   })
+
+  // }
 
 }
