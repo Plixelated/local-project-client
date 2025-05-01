@@ -1,0 +1,33 @@
+<div>
+  <div class="py-10 container">
+      @for (config of configData; let i = $index; track config){
+        <app-input-slider
+        [config]="config" 
+        [labels]="textData[i]"
+        />
+      }
+    </div>
+    <div class="mb-20">
+    <div class="flex justify-center mb-6">
+      <button class="bg-transparent 
+      text-purple-500 
+      font-semibold 
+      hover:bg-purple-500 
+      hover:text-white 
+      py-1.5 px-12 
+      border 
+      border-purple-500 
+      hover:border-transparent 
+      rounded" (click)="getAllValues()">
+      FIND LIFE
+      </button>
+  </div>
+    @if (reveal){
+    <div class="flex justify-center text-center text-sm">
+      <span>There are 
+      <b class="text-purple-500 text-md">{{calculation}}</b> 
+      potential stars systems with life in it. </span>
+    </div>
+    }
+  </div>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CitiesComponent } from './cities.component';
+import { InputSliderComponent } from './input-slider.component';
 
-describe('CitiesComponent', () => {
-  let component: CitiesComponent;
-  let fixture: ComponentFixture<CitiesComponent>;
+describe('InputSliderComponent', () => {
+  let component: InputSliderComponent;
+  let fixture: ComponentFixture<InputSliderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CitiesComponent]
+      imports: [InputSliderComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CitiesComponent);
+    fixture = TestBed.createComponent(InputSliderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

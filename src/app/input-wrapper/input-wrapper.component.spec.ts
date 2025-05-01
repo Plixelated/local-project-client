@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { InputWrapperComponent } from './input-wrapper.component';
 
-import { CountriesComponent } from './countries.component';
-
-describe('CountriesComponent', () => {
-  let component: CountriesComponent;
-  let fixture: ComponentFixture<CountriesComponent>;
+describe('InputWrapperComponent', () => {
+  let component: InputWrapperComponent;
+  let fixture: ComponentFixture<InputWrapperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CountriesComponent]
+      imports: [InputWrapperComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CountriesComponent);
+    fixture = TestBed.createComponent(InputWrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

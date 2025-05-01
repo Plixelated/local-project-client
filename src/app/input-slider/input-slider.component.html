@@ -1,0 +1,21 @@
+<div class="flex flex-col w-screen items-center justify-center my-10">
+    <span class="text-2xl text-center font-semibold m-5">{{labels.title}}</span>
+    <div class="flex flex-row items-center">
+        <span class="mx-5">{{config.min}}</span>
+            <input
+            type="range"
+            [min]="config.min"
+            [max]="config.max"
+            [step]="config.step"
+            [value]="rangeValue()"
+            (input)="onValueChange($event)"
+            class="slider-style px-0"
+            >
+        <span class="mx-5">{{config.max}}</span>
+    </div>  
+    <div class="flex flex-row justify-center mt-4">
+    <label class="text-md mx-1.5">You Have Currently Selected </label>
+    <label class="text-md font-semibold text-purple-400">{{label()}}</label>
+    </div>
+    <span class="w-2/5 text-center mt-6 text-sm desc-text min-w-1/4">{{labels.desc}}</span>
+</div>

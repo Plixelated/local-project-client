@@ -1,0 +1,44 @@
+@use '../../styles/' as *;
+
+:host{
+  color:$primary-font-color;
+}
+
+.desc-text{
+  color:$secondary-font-color;
+}
+
+/*Custom Slider*/
+.slider-style{
+    appearance: none;
+    height: 2px;
+    min-width: 350px;
+    max-width: 450px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: $foreground-color
+  }
+  
+  .slider-style::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px; /* Adjust thumb width */
+  height: 10px; /* Adjust thumb height */
+  background-color: $foreground-color; /* Change thumb color */
+  border-radius: 50%; /* Make thumb circular */
+  border: 2px solid $highlight-color;
+  cursor: pointer;
+  }
+
+  .slider-style::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px; /* Adjust thumb width */
+    height: 10px; /* Adjust thumb height */
+    background-color: $foreground-color; /* Change thumb color */
+    border-radius: 50%; /* Make thumb circular */
+    border: 2px solid $highlight-color;
+    cursor: pointer;
+    }
