@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { RouterOutlet } from '@angular/router';
-import { InputWrapperComponent } from './input-wrapper/input-wrapper.component';
-import { UUIDTypes, v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +9,7 @@ import { UUIDTypes, v4 as uuidv4 } from 'uuid';
   styleUrl: './app.component.scss',
   imports: [
     NavBarComponent,
-    RouterOutlet,
-    InputWrapperComponent,
+    RouterOutlet
   ]
 })
 export class AppComponent {

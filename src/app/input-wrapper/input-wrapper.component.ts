@@ -4,6 +4,7 @@ import { textData,configData } from "../data/data"
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment.development';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-input-wrapper',
@@ -48,7 +49,13 @@ export class InputWrapperComponent {
   }
 
   submitValues(results: Record<string,number>){
-    const submission_token = localStorage.getItem("DESubToken");
+    
+    let localToken = localStorage.getItem("DESubToken");
+    if (!localToken) {
+      localToken = uuidv4();
+      localStorage.setItem("DESubToken", localToken);
+    }
+
     const submission = {
       rateStars: results["r*"],
       frequencyPlanets: results["fp"],
@@ -57,7 +64,7 @@ export class InputWrapperComponent {
       fractionIntelligence: results["fi"],
       fractionCommunication: results["fc"],
       length: results["L"],
-      entryOrigin: submission_token
+      entryOrigin: localToken
     }
     console.log(submission);
     this.http.post(`${environment.baseURL}api/Submission/CreateSubmission/`, submission).subscribe({
