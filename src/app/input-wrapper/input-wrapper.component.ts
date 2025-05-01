@@ -3,7 +3,7 @@ import { InputSliderComponent } from "../input-slider/input-slider.component";
 import { textData,configData } from "../data/data"
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
