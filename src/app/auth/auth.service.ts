@@ -33,4 +33,16 @@ export class AuthService {
   private setAuthStatus(status:boolean){
     this._authStatus.next(status);
   }
+
+  logout(){
+    return this.http.post(`${environment.baseURL}api/Admin/Logout`,{},{withCredentials:true}).subscribe({
+      next: (res =>{
+        if(res){
+          this.setAuthStatus(false);
+        }
+      }),
+      error: (e) => console.error(e)
+    })
+  }
+  
 }

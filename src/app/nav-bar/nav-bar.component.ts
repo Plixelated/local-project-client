@@ -21,6 +21,10 @@ export class NavBarComponent {
     });
   }
 
+  logout(){
+    this.authService.logout();
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
