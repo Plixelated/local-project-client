@@ -67,7 +67,7 @@ export class InputWrapperComponent {
       entryOrigin: localToken
     }
     console.log(submission);
-    this.http.post(`${environment.baseURL}api/Submission/CreateSubmission/`, submission).subscribe({
+    this.http.post(`${environment.baseURL}api/Submission/CreateSubmission/`, submission, { responseType: 'text' }).subscribe({
       next:(res) =>{
         console.log(res)
       },
