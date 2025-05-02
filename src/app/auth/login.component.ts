@@ -9,7 +9,8 @@ import { AuthService } from './auth.service';
   selector: 'app-login',
   imports: [
     RouterLink, 
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

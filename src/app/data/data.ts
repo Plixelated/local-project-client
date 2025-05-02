@@ -59,5 +59,5 @@ export const configData=[
         {min:1,max:100,step:1, label:"fl"},
         {min:1,max:100,step:1, label:"fi"},
         {min:1,max:100,step:1, label:"fc"},
-        {min:1,max:100000000000,step:10000, label:"L", default:50000000000}, //Use scaled values to reach max value
+        {min:1,max:10000000000,step:10000, label:"L"}, //Use scaled values to reach max value
       ]
