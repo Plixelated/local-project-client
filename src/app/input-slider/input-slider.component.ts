@@ -7,8 +7,6 @@ import { Component,computed,EventEmitter,Input,OnInit,Output,signal} from '@angu
   styleUrl: './input-slider.component.scss'
 })
 export class InputSliderComponent implements OnInit {
-
-
     @Input() config!: {
       min:number; 
       max: number; 

@@ -2,9 +2,10 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { InputSliderComponent } from "../input-slider/input-slider.component";
 import { textData,configData } from "../data/data"
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Data } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { v4 as uuidv4 } from 'uuid';
+import { RawData } from '../raw-data';
 
 @Component({
   selector: 'app-input-wrapper',
@@ -56,7 +57,7 @@ export class InputWrapperComponent {
       localStorage.setItem("DESubToken", localToken);
     }
 
-    const submission = {
+    const submission : RawData = {
       rateStars: results["r*"],
       frequencyPlanets: results["fp"],
       nearEarth: results["ne"],
@@ -66,6 +67,7 @@ export class InputWrapperComponent {
       length: results["L"],
       entryOrigin: localToken
     }
+
     console.log(submission);
     this.http.post(`${environment.baseURL}api/Submission/CreateSubmission/`, submission, { responseType: 'text' }).subscribe({
       next:(res) =>{
@@ -75,15 +77,4 @@ export class InputWrapperComponent {
     })
 
   }
-
-  // getValues(){
-  //   this.http.get(`${environment.baseURL}api/Submission/GetAllValues`).subscribe({
-  //     next:(res) =>{
-  //       console.log(res)
-  //     },
-  //     error:(e) => console.error(e)
-  //   })
-
-  // }
-
 }

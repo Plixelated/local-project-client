@@ -1,0 +1,10 @@
+<div class="flex m-4 w-xl">
+    <canvas
+    baseChart
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"
+    ></canvas>
+</div>

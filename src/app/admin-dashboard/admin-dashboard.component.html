@@ -1,1 +1,24 @@
-<p>admin-dashboard works!</p>
+<form [formGroup]="form">
+    <div class="flex w-screen justify-center items-start space-x-4">
+        <select
+            class="bg-stone-800 border border-stone-800 text-stone-300 text-sm rounded-lg p-2.5 mx-4 focus:ring-purple-500 focus:border-purple-500"
+            type formControlName="variableFilter">
+            <option value="all">All</option>
+            <option value="r_s">r_s</option>
+            <option value="r_s">r_s</option>
+            <option value="r_s">r_s</option>
+            <option value="r_s">r_s</option>
+            <option value="r_s">r_s</option>
+            <option value="r_s">r_s</option>
+            <option value="r_s">r_s</option>
+        </select>
+            <app-data-chart
+            [chartData]="dataset"></app-data-chart>
+        <select class="bg-stone-800 border border-stone-800 text-stone-300  text-sm rounded-lg p-2.5 mx-4 focus:ring-purple-500 focus:border-purple-500"
+        type formControlName="operationFilter">
+            <option value="avg">Avg</option>
+            <option value="min">Min</option>
+            <option value="max">Max</option>
+        </select>
+    </div>
+</form>
