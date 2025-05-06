@@ -12,10 +12,10 @@ import { takeUntil, Subject } from 'rxjs';
 })
 export class NavBarComponent {
   public isLoggedIn: boolean = false;
-  private destroy$ = new Subject<void>();
+  private destroySubject = new Subject();
 
   constructor(private authService:AuthService){
-    authService.authStatus.pipe(takeUntil(this.destroy$)).subscribe(
+    authService.authStatus.pipe(takeUntil(this.destroySubject)).subscribe(
       res =>{
         this.isLoggedIn = res;
     });
@@ -26,8 +26,8 @@ export class NavBarComponent {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.destroySubject.next(true);
+    this.destroySubject.complete();
   }
 
 }

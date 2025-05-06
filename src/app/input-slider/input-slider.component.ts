@@ -7,8 +7,6 @@ import { Component,computed,EventEmitter,Input,OnInit,Output,signal} from '@angu
   styleUrl: './input-slider.component.scss'
 })
 export class InputSliderComponent implements OnInit {
-
-
     @Input() config!: {
       min:number; 
       max: number; 
@@ -42,6 +40,6 @@ export class InputSliderComponent implements OnInit {
     onValueChange(event:Event){
       this.rangeValue.set(+(event.target as HTMLInputElement).value);
       this.valueChange.emit({label:this.config.label, value:this.rangeValue()});
-      console.log(`${this.config.label}: ${this.rangeValue()}`)
+      //console.log(`${this.config.label}: ${this.rangeValue()}`)
     }
 }

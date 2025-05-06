@@ -4,6 +4,8 @@ import { LoginResponse } from './login-response';
 import { BehaviorSubject, Observable, pipe, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { RegisterRequest } from './register-request';
+import { RegisterResponse } from './register-response';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +45,36 @@ export class AuthService {
       }),
       error: (e) => console.error(e)
     })
+  }
+
+  register(registerRequest: RegisterRequest) : Observable<RegisterResponse>{
+
+    let url = `${environment.baseURL}api/Admin/Register`;
+
+    return this.http.post<RegisterResponse>(url,registerRequest, {withCredentials : true})
+    .pipe(tap(res => {
+      
+      if (res.success){
+        console.log(res)
+      }
+
+    }));
+
+  }
+
+  registerAdmin(registerRequest: RegisterRequest) : Observable<RegisterResponse>{
+
+    let url = `${environment.baseURL}api/Admin/RegisterAdmin`;
+
+    return this.http.post<RegisterResponse>(url,registerRequest, {withCredentials : true})
+    .pipe(tap(res => {
+      
+      if (res.success){
+        console.log(res)
+      }
+
+    }));
+
   }
   
 }
