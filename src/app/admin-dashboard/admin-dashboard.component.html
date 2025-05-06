@@ -1,24 +1,34 @@
 <form [formGroup]="form">
     <div class="flex w-screen justify-center items-start space-x-4">
-        <select
-            class="bg-stone-800 border border-stone-800 text-stone-300 text-sm rounded-lg p-2.5 mx-4 focus:ring-purple-500 focus:border-purple-500"
-            type formControlName="variableFilter">
-            <option value="all">All</option>
-            <option value="r_s">r_s</option>
-            <option value="r_s">r_s</option>
-            <option value="r_s">r_s</option>
-            <option value="r_s">r_s</option>
-            <option value="r_s">r_s</option>
-            <option value="r_s">r_s</option>
-            <option value="r_s">r_s</option>
-        </select>
-            <app-data-chart
-            [chartData]="dataset"></app-data-chart>
-        <select class="bg-stone-800 border border-stone-800 text-stone-300  text-sm rounded-lg p-2.5 mx-4 focus:ring-purple-500 focus:border-purple-500"
-        type formControlName="operationFilter">
-            <option value="avg">Avg</option>
-            <option value="min">Min</option>
-            <option value="max">Max</option>
-        </select>
+        <div class="flex flex-col justify-center items-center">
+            <span class="text-sm pb-3 text-center"> Variable:</span>
+            <select
+                class="bg-stone-800 border border-stone-800 text-stone-300 text-sm rounded-lg p-2.5 mx-4 focus:ring-purple-500 focus:border-purple-500"
+                type formControlName="variableFilter">
+                <option value="r_s">R_S</option>
+                <option value="f_p">F_p</option>
+                <option value="n_e">N_e</option>
+                <option value="f_l">F_l</option>
+                <option value="f_i">F_i</option>
+                <option value="f_c">F_c</option>
+                <option value="l">L</option>
+            </select>
+        </div>
+        <div class="flex flex-col justify-center items-center">
+            <app-data-chart 
+            [chartData]="dataset"
+            [chartTitle]="title"></app-data-chart>
+            <span class="text-center">The current calculation is <b class="text-purple-500">{{calculation}}</b></span>
+        </div>
+        <div class="flex flex-col justify-center items-center">
+            <span class="text-sm pb-3 text-center"> Filter:</span>
+            <select
+                class="bg-stone-800 border border-stone-800 text-stone-300  text-sm rounded-lg p-2.5 mx-4 focus:ring-purple-500 focus:border-purple-500"
+                type formControlName="operationFilter">
+                <option value="avg">Avg</option>
+                <option value="min">Min</option>
+                <option value="max">Max</option>
+            </select>
+        </div>
     </div>
 </form>
