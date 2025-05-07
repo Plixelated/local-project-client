@@ -8,13 +8,18 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { DataChartComponent } from '../data-chart/data-chart.component';
 import { FlatData } from '../flat-data';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { GroupedSubmission } from '../grouped-submission';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
     ReactiveFormsModule,
     DataChartComponent,
-    MatExpansionModule
+    MatExpansionModule,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
@@ -25,6 +30,7 @@ export class AdminDashboardComponent implements OnInit {
 
   form!: FormGroup;
   dataset: FilteredData[] | FilteredData[][] = [];
+  userData: GroupedSubmission[] = [];
 
   title:string = "";
 
@@ -49,6 +55,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.getFlatDataset();
     this.getFilteredDataset();
+    this.getUserData();
   }
 
 
@@ -61,9 +68,7 @@ export class AdminDashboardComponent implements OnInit {
     let url = `${environment.baseURL}api/Data/GetFlatDataset`;
     this.http.post<FlatData>(url, filters).subscribe({
       next:(res) =>{
-        console.log(res);
         this.calculation = Object.values(res).reduce((acc,curr) => acc * curr, 1);
-        console.log(this.calculation)
       },
       error:(e) => console.error(e)
     });
@@ -84,6 +89,17 @@ export class AdminDashboardComponent implements OnInit {
       error:(e) => console.error(e)
     });
   }
+
+  getUserData(){
+    let url = `${environment.baseURL}api/Data/GetRawData`;
+    this.http.get<GroupedSubmission[]>(url).subscribe({
+      next:(res) =>{
+        this.userData = res;
+        console.log(this.userData)
+      },
+      error:(e) => console.error(e)
+    });
+  }
   
 
   getFilteredDataset(){
@@ -95,11 +111,18 @@ export class AdminDashboardComponent implements OnInit {
     this.http.post<FilteredData[]>(url, filters).subscribe({
       next:(res) =>{
         this._dataset = res;
-        console.log(this._dataset)
         this.title = filters.variableFilter.toUpperCase();
         this.dataset = this._dataset;
       },
       error:(e) => console.error(e)
     });
+  }
+
+  edit(originID:string, id:number){
+    console.log(`Edit ${originID} Submission: ${id}`)
+  }
+
+  delete(originID:string, id:number){
+    console.log(`Delete ${originID} Submission: ${id}`)
   }
 }
