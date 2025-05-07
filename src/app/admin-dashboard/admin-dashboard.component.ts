@@ -7,12 +7,14 @@ import { FilteredData } from '../filtered-data';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataChartComponent } from '../data-chart/data-chart.component';
 import { FlatData } from '../flat-data';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
     ReactiveFormsModule,
-    DataChartComponent
+    DataChartComponent,
+    MatExpansionModule
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'

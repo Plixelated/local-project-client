@@ -15,9 +15,7 @@
             </select>
         </div>
         <div class="flex flex-col justify-center items-center">
-            <app-data-chart 
-            [chartData]="dataset"
-            [chartTitle]="title"></app-data-chart>
+            <app-data-chart [chartData]="dataset" [chartTitle]="title"></app-data-chart>
             <span class="text-center">The current calculation is <b class="text-purple-500">{{calculation}}</b></span>
         </div>
         <div class="flex flex-col justify-center items-center">
@@ -30,5 +28,26 @@
                 <option value="max">Max</option>
             </select>
         </div>
+    </div>
+    <div class="flex w-2xl justify-center items-center">
+        <ul>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                    <mat-panel-title> User Info: </mat-panel-title>
+                    <mat-panel-description>UserID</mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li>
+                            Var 1
+                        </li>
+                        <li>
+                            Var 2
+                        </li>
+
+                    </ul>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </ul>
     </div>
 </form>
