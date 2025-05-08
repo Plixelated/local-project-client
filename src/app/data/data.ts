@@ -55,7 +55,7 @@ export const textData = [
 export const configData=[
         {min:0.1,max:3,step:0.1, label:"r*",default:0.5},
         {min:1,max:100,step:1, label:"fp"},
-        {min:0.01,max:10,step:0.01, label:"ne"},
+        {min:1,max:10,step:1, label:"ne"},
         {min:1,max:100,step:1, label:"fl"},
         {min:1,max:100,step:1, label:"fi"},
         {min:1,max:100,step:1, label:"fc"},

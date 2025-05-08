@@ -71,7 +71,7 @@ export class InputWrapperComponent {
     console.log(submission);
     this.http.post(`${environment.baseURL}api/Submission/CreateSubmission`, submission, { responseType: 'text' }).subscribe({
       next:(res) =>{
-        console.log(res)
+        console.log(res + submission.entryOrigin)
       },
       error:(e) => console.error(e)
     })

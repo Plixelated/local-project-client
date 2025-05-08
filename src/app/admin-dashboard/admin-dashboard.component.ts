@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Filters } from './filters';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { GroupedSubmission } from '../grouped-submission';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import * as SignalR from "@microsoft/signalr";
+import { HubConnection } from "@microsoft/signalr";
+import { HubService } from '../hub.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -24,7 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit, OnDestroy {
   private _dataset: FilteredData[] | FilteredData[][] = [];
   public calculation:number = 0;
 
@@ -34,7 +37,11 @@ export class AdminDashboardComponent implements OnInit {
 
   title:string = "";
 
-  constructor(private fb: FormBuilder, private http: HttpClient){}
+  constructor(
+    private fb: FormBuilder, 
+    private http: HttpClient, 
+    private hubService :HubService
+  ){}
 
   ngOnInit(): void {
     //Set Default Values
@@ -56,6 +63,20 @@ export class AdminDashboardComponent implements OnInit {
     this.getFlatDataset();
     this.getFilteredDataset();
     this.getUserData();
+
+    this.hubService.getData().subscribe({
+      next: (res) =>{
+        this.userData =res;
+        this.getFilteredDataset();
+      },
+      error: (e) => console.log(e)
+    });
+
+
+  }
+
+  ngOnDestroy(): void {
+    this.hubService.disconnect();
   }
 
 
@@ -95,7 +116,6 @@ export class AdminDashboardComponent implements OnInit {
     this.http.get<GroupedSubmission[]>(url).subscribe({
       next:(res) =>{
         this.userData = res;
-        console.log(this.userData)
       },
       error:(e) => console.error(e)
     });
