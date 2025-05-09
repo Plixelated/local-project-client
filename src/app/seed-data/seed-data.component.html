@@ -1,0 +1,9 @@
+<div class="p-5">
+    <button (click)="seedRoles()">Seed Roles</button>
+    <button (click)="seedAdminClaims()">Seed Admin Claims</button>
+    <button (click)="seedResearcherClaims()">Seed Researcher Claims</button>
+
+    <span>Seed Qty:</span>
+    <input type="number" class="border border-purple-500 w-16 text-center p-2" [(ngModel)]="seedQty"/>
+    <button (click)="seedData()">Seed Data</button>
+</div>
