@@ -12,16 +12,16 @@ import { FilteredData } from '../filtered-data';
   styleUrl: './data-chart.component.scss'
 })
 export class DataChartComponent implements OnChanges {
-  private y_min:number = 0;
-  private y_max:number = 100;
+  private y_min: number = 0;
+  private y_max: number = 100;
 
   @Input() chartData: any = [];
   @Input() chartLabels: string[] = [];
-  @Input() chartTitle:string = "Submissions";
+  @Input() chartTitle: string = "Submissions";
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  ngOnChanges(changes:SimpleChanges):void{
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['chartData'] || changes['chartXLabels'])
       this.updateChartView();
   }
@@ -47,16 +47,16 @@ export class DataChartComponent implements OnChanges {
         display: true,
         text: this.chartTitle,
       },
-      legend:{
+      legend: {
         display: false
       },
-      tooltip:{
+      tooltip: {
         displayColors: false,
-        callbacks:{
-          title: function(context){
-           return `Value: ${context[0].raw}`
+        callbacks: {
+          title: function (context) {
+            return `Value: ${context[0].raw}`
           },
-          label:function(context){
+          label: function (context) {
             const id = context.label
             return `Origin: ${id}`
           },
@@ -68,9 +68,9 @@ export class DataChartComponent implements OnChanges {
     },
     scales: {
       x: {
-        ticks:{
+        ticks: {
           callback:
-            function(value){
+            function (value) {
               return value;
             }
         },
@@ -92,114 +92,70 @@ export class DataChartComponent implements OnChanges {
 
   public lineChartType: ChartType = 'line';
 
-  private updateChartView(): void{
+  private updateChartView(): void {
     this.displayData();
     this.chart?.update();
   }
 
-  private getMaxValue(dataset: FilteredData[]){
+  private getMaxValue(dataset: FilteredData[]) {
     let max = 0;
-    for(let i=0; i < dataset.length; i++ ){
-      if (dataset[i].value > max){
+    for (let i = 0; i < dataset.length; i++) {
+      if (dataset[i].value > max) {
         max = dataset[i].value;
       }
     }
     return max
   }
 
-  private getValues(dataset:FilteredData[]){
+  private getValues(dataset: FilteredData[]) {
     let data = []
-    for(let i=0; i < dataset.length; i++ ){
+    for (let i = 0; i < dataset.length; i++) {
       data.push(dataset[i].value);
     }
     return data;
   }
 
-  private getIDs(dataset:FilteredData[]){
+  private getIDs(dataset: FilteredData[]) {
     let data = []
-    for(let i=0; i < dataset.length; i++ ){
+    for (let i = 0; i < dataset.length; i++) {
       data.push(dataset[i].originID);
     }
     return data;
   }
 
-  // private async displayAllData(){
-  //   const dataset: FilteredData[][] = this.chartData;
-
-  //   let max: number[] = [];
-  //   let values:number[][] = []
-  //   this.lineChartData.datasets = [];
-
-  //   console.log(this.lineChartOptions!.scales)
-
-  //   dataset.forEach((set,index) => {
-  //     let hidden = false;
-  //     const max = this.getMaxValue(set);
-  //     const values = this.getValues(set);
-  //     console.log(values)
-  //     this.lineChartData.labels = Object.keys(set)
-
-  //     if(index == 0) {hidden = false}
-  //     else {hidden = true}
-
-  //     const newDataset: ChartDataset<'line'> = {
-  //       label: set[0].field,
-  //       data: values,
-  //       borderColor: this.getColor(index),
-  //       fill: false,
-  //       tension: 0.4,
-  //       yAxisID: `y${index}`,
-  //       hidden: hidden,
-  //     }
-  //     this.lineChartData.datasets.push(newDataset);
-
-  //     this.lineChartOptions!.scales![`y${index}`] = {
-  //       display: !hidden,
-  //       position: 'left',
-  //       title:{
-  //         display: !hidden,
-  //         text: set[0].field,
-  //       },
-  //       ticks: {
-  //         display: hidden,
-  //       },
-  //     }
-  //   });
-
-  //   console.log(this.lineChartOptions!.scales)
-
-  // }
-
-  private displayData(){
+  private displayData() {
     const data = this.chartData as FilteredData[];
 
-    //Cleanup laters
-    const max = this.getMaxValue(data);
-    const values = this.getValues(data);
-    const ids = this.getIDs(data);
+    if (data.length > 0) {
 
-    this.lineChartData.labels = ids
-    this.lineChartData.datasets=[
-      {
-        label: data[0].field,
-        data: values,
-        borderColor: `rgb(192, 134, 228)`,
-        fill: false,
-        tension: 0.4,
-        borderWidth: 2
-      }
-    ]
+      //Cleanup laters
+      const max = this.getMaxValue(data);
+      const values = this.getValues(data);
+      const ids = this.getIDs(data);
+
+      this.lineChartData.labels = ids
+      this.lineChartData.datasets = [
+        {
+          label: data[0].field, //keep getting null error
+          data: values,
+          borderColor: `rgb(192, 134, 228)`,
+          fill: false,
+          tension: 0.4,
+          borderWidth: 2
+        }
+      ]
+    }
 
   }
 
   //UPDATE LATER
   private getColor(index: number): string {
-    const colors = [ 
-      `rgb(188, 153, 210)`, 
-      `rgb(235, 5, 51)`, 
-      `rgb(235, 212, 5)`, 
-      `rgb(5, 93, 235)`, 
-      `rgb(235, 101, 5)`, 
+    const colors = [
+      `rgb(188, 153, 210)`,
+      `rgb(235, 5, 51)`,
+      `rgb(235, 212, 5)`,
+      `rgb(5, 93, 235)`,
+      `rgb(235, 101, 5)`,
       `rgb(5, 224, 235)`,
       `rgb(235, 5, 135)`];
     return colors[index % colors.length];

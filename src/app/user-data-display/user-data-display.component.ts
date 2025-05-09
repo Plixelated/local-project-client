@@ -25,6 +25,7 @@ import { GroupedData } from '../grouped-data';
 import { subscribeOn } from 'rxjs';
 
 export interface EditData {
+  Id: 0,
   r_s: 0,
   f_p: 0,
   n_e: 0,
@@ -32,7 +33,6 @@ export interface EditData {
   f_l: 0,
   f_c: 0,
   l: 0,
-  submission_id: 0,
   origin: ''
 }
 
@@ -46,8 +46,7 @@ export interface EditData {
     MatButtonModule,
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
+    MatDialogActions
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -55,6 +54,7 @@ export class EditDialog {
   readonly dialogRef = inject(MatDialogRef<EditDialog>);
   readonly data = inject<EditData>(MAT_DIALOG_DATA);
   readonly formData = model({
+    Id: this.data.Id,
     r_s: this.data.r_s,
     f_p: this.data.f_p,
     n_e: this.data.n_e,
@@ -62,7 +62,6 @@ export class EditDialog {
     f_l: this.data.f_l,
     f_c: this.data.f_c,
     l: this.data.l,
-    submission_id: this.data.submission_id,
     origin: this.data.origin
   });
 
@@ -93,16 +92,25 @@ export class UserDataDisplayComponent implements OnInit {
   public editingID: number = -1;
   form!: FormGroup;
 
+  panelStatus:boolean[] = [];
+
   constructor(
     private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({});
+    
+    //ADD THIS FEATURE LATER
+    // this.userData.forEach(() =>{
+    //   this.panelStatus.push(false);
+    // });
+    // console.log(this.panelStatus)
   }
 
   //DIALOG
   readonly editData = signal({
+    Id: 0,
     r_s: 0,
     f_p: 0,
     n_e: 0,
@@ -110,7 +118,6 @@ export class UserDataDisplayComponent implements OnInit {
     f_l: 0,
     f_c: 0,
     l: 0,
-    submission_id: 0,
     origin: ''
   });
 
@@ -119,6 +126,7 @@ export class UserDataDisplayComponent implements OnInit {
     //OPEN DIALOG AND INJECT DATA
     const dialogRef = this.dialog.open(EditDialog, {
       data: {
+        Id: this.editData().Id,
         r_s: this.editData().r_s,
         f_p: this.editData().f_p,
         n_e: this.editData().n_e,
@@ -126,7 +134,6 @@ export class UserDataDisplayComponent implements OnInit {
         f_l: this.editData().f_l,
         f_c: this.editData().f_c,
         l: this.editData().l,
-        submission_id: this.editData().submission_id,
         origin: this.editData().origin
       },
       width: "full"
@@ -136,18 +143,30 @@ export class UserDataDisplayComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        console.log(result);
         this.editData.set(result);
-        
+        this.updateSubmission(result);
       }
     });
   }
   //DIALOG
+
+  updateSubmission(result:EditData){
+    let url = `${environment.baseURL}api/Submission/Edit`;
+    this.http.put(url, result).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (e) => console.error(e)
+    });    
+  }
 
   edit(originID: string, id: number, i: number, j: number) {
     this.editing = true;
     this.editingID = id;
 
     this.editData.set({
+      Id:id,
       r_s: this.userData[i].submittedValues[j].r_s,
       f_p: this.userData[i].submittedValues[j].f_p,
       n_e: this.userData[i].submittedValues[j].n_e,
@@ -155,7 +174,6 @@ export class UserDataDisplayComponent implements OnInit {
       f_l: this.userData[i].submittedValues[j].f_l,
       f_c: this.userData[i].submittedValues[j].f_c,
       l: this.userData[i].submittedValues[j].l,
-      submission_id: id,
       origin: originID
     });
 

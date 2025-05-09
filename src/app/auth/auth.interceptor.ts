@@ -9,7 +9,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const modifiedRequest = req.clone({
     withCredentials: true
   });
-  console.log('Modified Request with credentials:', modifiedRequest);
+  //console.log('Modified Request with credentials:', modifiedRequest);
   return next(modifiedRequest).pipe(
     catchError(e => {
       if (e instanceof HttpErrorResponse && e.status === 401) {
