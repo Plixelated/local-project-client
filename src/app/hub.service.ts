@@ -24,6 +24,7 @@ export class HubService {
   private connect(){
     this.connection.start().catch(e => console.log(e));
     this.connection.on("updatedData", (data: GroupedSubmission[]) =>{
+      console.log("Connected");
       this._data.next(data);
     })
   }

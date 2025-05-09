@@ -15,7 +15,7 @@ export class DataChartComponent implements OnChanges {
   private y_min: number = 0;
   private y_max: number = 100;
 
-  @Input() chartData: any = [];
+  @Input() chartData: FilteredData[] = [];
   @Input() chartLabels: string[] = [];
   @Input() chartTitle: string = "Submissions";
 
@@ -31,7 +31,7 @@ export class DataChartComponent implements OnChanges {
     datasets: [
       {
         label: 'Cubic interpolation',
-        data: this.chartData,
+        data: [],
         borderColor: `rgb(146, 5, 235)`,
         fill: false,
         tension: 0.4
@@ -124,7 +124,7 @@ export class DataChartComponent implements OnChanges {
   }
 
   private displayData() {
-    const data = this.chartData as FilteredData[];
+    const data = this.chartData;
 
     if (data.length > 0) {
 
@@ -136,7 +136,7 @@ export class DataChartComponent implements OnChanges {
       this.lineChartData.labels = ids
       this.lineChartData.datasets = [
         {
-          label: data[0].field, //keep getting null error
+          label: data[0].field,
           data: values,
           borderColor: `rgb(192, 134, 228)`,
           fill: false,
@@ -148,19 +148,7 @@ export class DataChartComponent implements OnChanges {
 
   }
 
-  //UPDATE LATER
-  private getColor(index: number): string {
-    const colors = [
-      `rgb(188, 153, 210)`,
-      `rgb(235, 5, 51)`,
-      `rgb(235, 212, 5)`,
-      `rgb(5, 93, 235)`,
-      `rgb(235, 101, 5)`,
-      `rgb(5, 224, 235)`,
-      `rgb(235, 5, 135)`];
-    return colors[index % colors.length];
-  }
-  // events
+  //TODO: Add Click Functionality
   public chartClicked({
     event,
     active,
@@ -168,7 +156,6 @@ export class DataChartComponent implements OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
   }
 
   public chartHovered({
@@ -178,6 +165,5 @@ export class DataChartComponent implements OnChanges {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    //console.log(event, active);
   }
 }

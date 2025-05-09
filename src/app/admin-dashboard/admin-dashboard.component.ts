@@ -3,7 +3,7 @@ import { Filters } from './filters';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { FilteredData } from '../filtered-data';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataChartComponent } from '../data-chart/data-chart.component';
 import { FlatData } from '../flat-data';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -29,17 +29,16 @@ import { UserDataDisplayComponent } from "../user-data-display/user-data-display
   styleUrl: './admin-dashboard.component.scss'
 })
 export class AdminDashboardComponent implements OnInit, OnDestroy {
-  private _dataset: FilteredData[] | FilteredData[][] = [];
+  private _dataset: FilteredData[] = [];
   public calculation: number = 0;
 
   form!: FormGroup;
-  dataset: FilteredData[] | FilteredData[][] = [];
+  dataset: FilteredData[] = [];
   userData: GroupedSubmission[] = [];
 
   title: string = "";
 
   constructor(
-    private fb: FormBuilder,
     private http: HttpClient,
     private hubService: HubService
   ) { }
@@ -61,8 +60,11 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       this.getFilteredDataset();
     });
 
+    //Use to generate calculation
     this.getFlatDataset();
+    //Use to get data to display
     this.getFilteredDataset();
+    //Use to get data for user info
     this.getUserData();
 
     this.hubService.getData().subscribe({
@@ -92,22 +94,6 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.http.post<FlatData>(url, filters).subscribe({
       next: (res) => {
         this.calculation = Object.values(res).reduce((acc, curr) => acc * curr, 1);
-      },
-      error: (e) => console.error(e)
-    });
-  }
-
-  getAllData() {
-    let filters = <Filters>{
-      variableFilter: this.form.controls['variableFilter'].value,
-      operationFilter: this.form.controls['operationFilter'].value
-    }
-    let url = `${environment.baseURL}api/Data/GetAllData`;
-    this.http.post<FilteredData[][]>(url, filters).subscribe({
-      next: (res) => {
-        this._dataset = res;
-        this.title = filters.variableFilter.toUpperCase();
-        this.dataset = this._dataset;
       },
       error: (e) => console.error(e)
     });
