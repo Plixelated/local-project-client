@@ -1,0 +1,72 @@
+<form [formGroup]="form">
+    <div class="flex w-screen justify-center items-center mt-8">
+        <ul>
+            @for (data of userData; track data; let i = $index){
+            <li class="my-4">
+                <mat-accordion>
+                    <mat-expansion-panel class="w-xl">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="text-sm"> Submission: </mat-panel-title>
+                            <mat-panel-description class="text-sm">{{data.originID}}</mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="flex justify-center items-center">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="px-3 text-center"></th>
+                                        <th class="px-3 text-center">Rₛ</th>
+                                        <th class="px-3 text-center">Fₚ</th>
+                                        <th class="px-3 text-center">Nₑ</th>
+                                        <th class="px-3 text-center">Fₗ</th>
+                                        <th class="px-3 text-center">Fᵢ</th>
+                                        <th class="px-3 text-center">Fc</th>
+                                        <th class="px-3 text-center">L</th>
+                                        <th class="px-3 text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (item of data.submittedValues; track item.id; let j = $index){
+                                    <tr class="py-2">
+                                        <!-- @if(!editing || editingID != item.id){ -->
+                                        <button mat-mini-fab (click)="edit(data.originID, item.id, i,j)"
+                                            class="!bg-transparent !shadow-none">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <!-- }
+                                        @else{
+                                        <button mat-mini-fab (click)="save(data.originID,item.id)"
+                                            class="!bg-transparent !shadow-none">
+                                            <mat-icon>save</mat-icon>
+                                        </button>
+                                        } -->
+                                        <td class="px-3 text-center">{{ item.r_s }}</td>
+                                        <td class="px-3 text-center">{{ item.f_p }}</td>
+                                        <td class="px-3 text-center">{{ item.n_e }}</td>
+                                        <td class="px-3 text-center">{{ item.f_l }}</td>
+                                        <td class="px-3 text-center">{{ item.f_i }}</td>
+                                        <td class="px-3 text-center">{{ item.f_c }}</td>
+                                        <td class="px-3 text-center">{{ item.l }}</td>
+
+                                        <!-- @if(!editing|| editingID != item.id){ -->
+                                        <button mat-mini-fab (click)="delete(data.originID,item.id)"
+                                            class="!bg-transparent !shadow-none">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <!-- }
+                                        @else {
+                                        <button mat-mini-fab  class="!bg-transparent !shadow-none">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                        } -->
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </li>
+            }
+        </ul>
+    </div>
+</form>

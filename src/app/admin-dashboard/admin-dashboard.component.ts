@@ -2,18 +2,18 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Filters } from './filters';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { RawData } from '../raw-data';
 import { FilteredData } from '../filtered-data';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataChartComponent } from '../data-chart/data-chart.component';
 import { FlatData } from '../flat-data';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { GroupedSubmission } from '../grouped-submission';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import * as SignalR from "@microsoft/signalr";
 import { HubConnection } from "@microsoft/signalr";
 import { HubService } from '../hub.service';
+import { UserDataDisplayComponent } from "../user-data-display/user-data-display.component";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,26 +22,27 @@ import { HubService } from '../hub.service';
     DataChartComponent,
     MatExpansionModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    UserDataDisplayComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
 export class AdminDashboardComponent implements OnInit, OnDestroy {
   private _dataset: FilteredData[] | FilteredData[][] = [];
-  public calculation:number = 0;
+  public calculation: number = 0;
 
   form!: FormGroup;
   dataset: FilteredData[] | FilteredData[][] = [];
   userData: GroupedSubmission[] = [];
 
-  title:string = "";
+  title: string = "";
 
   constructor(
-    private fb: FormBuilder, 
-    private http: HttpClient, 
-    private hubService :HubService
-  ){}
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private hubService: HubService
+  ) { }
 
   ngOnInit(): void {
     //Set Default Values
@@ -65,14 +66,15 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.getUserData();
 
     this.hubService.getData().subscribe({
-      next: (res) =>{
-        this.userData =res;
+      next: (res) => {
+        console.log("Update Received");
+        this.userData = [];
+        setTimeout(() => { this.userData = res });
+
         this.getFilteredDataset();
       },
       error: (e) => console.log(e)
     });
-
-
   }
 
   ngOnDestroy(): void {
@@ -80,7 +82,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
 
 
-  getFlatDataset(){
+  getFlatDataset() {
     //USE FOR CALCULATION
     let filters = <Filters>{
       variableFilter: "all",
@@ -88,61 +90,54 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
     let url = `${environment.baseURL}api/Data/GetFlatDataset`;
     this.http.post<FlatData>(url, filters).subscribe({
-      next:(res) =>{
-        this.calculation = Object.values(res).reduce((acc,curr) => acc * curr, 1);
+      next: (res) => {
+        this.calculation = Object.values(res).reduce((acc, curr) => acc * curr, 1);
       },
-      error:(e) => console.error(e)
+      error: (e) => console.error(e)
     });
   }
 
-  getAllData(){
+  getAllData() {
     let filters = <Filters>{
       variableFilter: this.form.controls['variableFilter'].value,
       operationFilter: this.form.controls['operationFilter'].value
     }
     let url = `${environment.baseURL}api/Data/GetAllData`;
     this.http.post<FilteredData[][]>(url, filters).subscribe({
-      next:(res) =>{
+      next: (res) => {
         this._dataset = res;
         this.title = filters.variableFilter.toUpperCase();
         this.dataset = this._dataset;
       },
-      error:(e) => console.error(e)
+      error: (e) => console.error(e)
     });
   }
 
-  getUserData(){
+  getUserData() {
     let url = `${environment.baseURL}api/Data/GetRawData`;
     this.http.get<GroupedSubmission[]>(url).subscribe({
-      next:(res) =>{
+      next: (res) => {
         this.userData = res;
       },
-      error:(e) => console.error(e)
+      error: (e) => console.error(e)
     });
   }
-  
 
-  getFilteredDataset(){
+
+  getFilteredDataset() {
     let filters = <Filters>{
       variableFilter: this.form.controls['variableFilter'].value,
       operationFilter: this.form.controls['operationFilter'].value
     }
     let url = `${environment.baseURL}api/Data/GetFilteredDataset`;
     this.http.post<FilteredData[]>(url, filters).subscribe({
-      next:(res) =>{
+      next: (res) => {
         this._dataset = res;
         this.title = filters.variableFilter.toUpperCase();
         this.dataset = this._dataset;
       },
-      error:(e) => console.error(e)
+      error: (e) => console.error(e)
     });
   }
 
-  edit(originID:string, id:number){
-    console.log(`Edit ${originID} Submission: ${id}`)
-  }
-
-  delete(originID:string, id:number){
-    console.log(`Delete ${originID} Submission: ${id}`)
-  }
 }
