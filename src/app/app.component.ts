@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { RouterOutlet } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,10 @@ import { v4 as uuidv4 } from 'uuid';
   ]
 })
 export class AppComponent {
-  title = 'The Drake Equation';
+  title:string = 'The Drake Equation';
 
-  constructor() {
+  constructor(private titleService: Title) {
+    titleService.setTitle(this.title);
     const localToken = localStorage.getItem("DESubToken");
     if (!localToken) {
       const submission_token = uuidv4();
