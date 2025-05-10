@@ -44,6 +44,9 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    //Connect to SignalR
+    this.hubService.connect();
+
     //Set Default Values
     this.form = new FormGroup({
       variableFilter: new FormControl('r_s'),
