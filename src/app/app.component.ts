@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
   ]
 })
 export class AppComponent {
-  title = 'project-client';
+  title = 'The Drake Equation';
 
   constructor() {
     const localToken = localStorage.getItem("DESubToken");
