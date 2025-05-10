@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center m-5">
+<div class="flex flex-col justify-center items-center m-5 w-screen">
     <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedRoles()">Roles</button>
     <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedAdminClaims()">Admin Claims</button>
     <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedResearcherClaims()">Researcher
@@ -7,6 +7,6 @@
     <div class="flex flex-row px-2 items-center">
         <span class="text-center mr-2">Seed Qty:</span>
         <input type="number" class="border border-purple-500 w-16 text-center p-2" [(ngModel)]="seedQty" />
-    <button class="bg-purple-900 rounded-lg p-3 my-2 mx-2" (click)="seedData()">Seed Data</button>
-</div>
+        <button class="bg-purple-900 rounded-lg p-3 my-2 mx-2" (click)="seedData()">Seed Data</button>
+    </div>
 </div>
