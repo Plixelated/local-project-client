@@ -155,6 +155,7 @@ export class UserDataDisplayComponent implements OnInit {
     let url = `${environment.baseURL}api/Submission/Edit`;
     this.http.put(url, result).subscribe({
       next: (res) => {
+        console.log("Data Edited Succesfully")
         console.log(res);
       },
       error: (e) => console.error(e)
