@@ -38,7 +38,7 @@ export class SeedDataComponent {
   }
 
   seedData(){
-    let url = `${environment.baseURL}api/Seed/ResearcherClaims`;
+    let url = `${environment.baseURL}api/Seed/RandomData`;
     this.http.post(url, this.seedQty).subscribe({
       next: (res) => console.log(res),
       error: (e) => console.error(e)

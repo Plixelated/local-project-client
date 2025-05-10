@@ -17,64 +17,71 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(loginRequest: LoginRequest): Observable<LoginResponse>{
+  login(loginRequest: LoginRequest): Observable<LoginResponse> {
 
     let url = `${environment.baseURL}api/Admin/Login`;
 
-    return this.http.post<LoginResponse>(url,loginRequest, {withCredentials : true})
-    .pipe(tap(res => {
-      
-      if (res.success){
-        this.setAuthStatus(true);
-      }
+    return this.http.post<LoginResponse>(url, loginRequest)//, {withCredentials : true})
+      .pipe(tap(res => {
 
-    }));
+        if (res.success) {
+          localStorage.setItem("project_token", res.token);
+          this.setAuthStatus(true);
+        }
+
+      }));
 
   }
 
-  private setAuthStatus(status:boolean){
+  private setAuthStatus(status: boolean) {
     this._authStatus.next(status);
   }
 
-  logout(){
-    return this.http.post(`${environment.baseURL}api/Admin/Logout`,{},{withCredentials:true}).subscribe({
-      next: (res =>{
-        if(res){
-          this.setAuthStatus(false);
-        }
-      }),
-      error: (e) => console.error(e)
-    })
+  logout() {
+    // return this.http.post(`${environment.baseURL}api/Admin/Logout`,{},{withCredentials:true}).subscribe({
+    //   next: (res =>{
+    //     if(res){
+    //       this.setAuthStatus(false);
+    //     }
+    //   }),
+    //   error: (e) => console.error(e)
+    // })
+
+    localStorage.removeItem("project_token");
+    this.setAuthStatus(false);
   }
 
-  register(registerRequest: RegisterRequest) : Observable<RegisterResponse>{
+  isAuthenticated():boolean{
+    return localStorage.getItem("project_token") != null;
+  }
+
+  register(registerRequest: RegisterRequest): Observable<RegisterResponse> {
 
     let url = `${environment.baseURL}api/Admin/Register`;
 
-    return this.http.post<RegisterResponse>(url,registerRequest, {withCredentials : true})
-    .pipe(tap(res => {
-      
-      if (res.success){
-        console.log(res)
-      }
+    return this.http.post<RegisterResponse>(url, registerRequest)//, {withCredentials : true})
+      .pipe(tap(res => {
+        if (res.success) {
+          console.log(res)
+        }
 
-    }));
+      }));
 
   }
 
-  registerAdmin(registerRequest: RegisterRequest) : Observable<RegisterResponse>{
+  registerAdmin(registerRequest: RegisterRequest): Observable<RegisterResponse> {
 
     let url = `${environment.baseURL}api/Admin/RegisterAdmin`;
 
-    return this.http.post<RegisterResponse>(url,registerRequest, {withCredentials : true})
-    .pipe(tap(res => {
-      
-      if (res.success){
-        console.log(res)
-      }
+    return this.http.post<RegisterResponse>(url, registerRequest, { withCredentials: true })
+      .pipe(tap(res => {
 
-    }));
+        if (res.success) {
+          console.log(res)
+        }
+
+      }));
 
   }
-  
+
 }

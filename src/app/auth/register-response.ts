@@ -1,4 +1,5 @@
 export interface RegisterResponse {
-    success:boolean,
+    success: boolean,
     message: string,
+    token: string
 }

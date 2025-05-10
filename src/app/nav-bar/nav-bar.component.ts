@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { InputSliderComponent } from "../input-slider/input-slider.component";
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
@@ -19,7 +18,7 @@ import { takeUntil, Subject } from 'rxjs';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit, OnDestroy {
   public isLoggedIn: boolean = false;
   private destroySubject = new Subject();
 
@@ -27,13 +26,17 @@ export class NavBarComponent {
     authService.authStatus.pipe(takeUntil(this.destroySubject)).subscribe(
       res => {
         this.isLoggedIn = res;
-        console.log(this.isLoggedIn);
       });
   }
 
   logout() {
     this.authService.logout();
     this.router.navigate(["/"]);
+  }
+
+  ngOnInit(): void{
+    this.isLoggedIn = this.authService.isAuthenticated();
+    console.log(this.isLoggedIn);
   }
 
   ngOnDestroy(): void {
