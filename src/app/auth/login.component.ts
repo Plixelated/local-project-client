@@ -4,19 +4,22 @@ import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginRequest } from './login-request';
 import { AuthService } from './auth.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { OriginID } from '../origin-id';
 
 @Component({
   selector: 'app-login',
   imports: [
-    RouterLink, 
+    RouterLink,
     ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup; //Will be defined
-  
-  constructor(private authService:AuthService, private router:Router){}
+
+  constructor(private authService: AuthService, private router: Router, private http:HttpClient) { }
 
   ngOnInit(): void {
     //Initialize Form
@@ -32,13 +35,28 @@ export class LoginComponent implements OnInit {
       password: this.form.controls['password'].value
     };
 
-  this.authService.login(loginRequest).subscribe({
-    next: (res) =>{
-      if (res.success){
-        this.router.navigate(["/"]);
-      }
-    },
-    error: (e) => console.error(e)
-  });
+    this.authService.login(loginRequest).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.router.navigate(["/"]);
+          this.updateOriginToken();
+        }
+      },
+      error: (e) => console.error(e)
+    });
   };
+
+  updateOriginToken() {
+    //Get Local OriginID
+    const localOriginID = localStorage.getItem("DESubToken");
+    //If Local OriginID Exists overwrite it with saved token
+    let url = `${environment.baseURL}api/Admin/GetUserOriginID`;
+    this.http.get<OriginID>(url).subscribe({
+      next: (res) => {
+        let originID:OriginID = res;
+        localStorage.setItem("DESubToken",originID.entryOrigin);
+      },
+      error: (e) => console.error(e)
+    });
+  }
 }

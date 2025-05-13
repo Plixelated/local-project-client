@@ -5,6 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginRequest } from './login-request';
 import { AuthService } from './auth.service';
 import { RegisterRequest } from './register-request';
+import { environment } from '../../environments/environment';
+import { OriginID } from '../origin-id';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +21,7 @@ import { RegisterRequest } from './register-request';
 export class RegisterComponent implements OnInit {
   form!: FormGroup; //Will be defined
   
-  constructor(private authService:AuthService, private router:Router){}
+  constructor(private authService:AuthService, private router:Router, private http:HttpClient){}
 
   public success: boolean = false;
 
@@ -35,7 +38,8 @@ export class RegisterComponent implements OnInit {
     let registerRequest = <RegisterRequest>{
       userName: this.form.controls['userName'].value,
       password: this.form.controls['password'].value,
-      email: this.form.controls['email'].value
+      email: this.form.controls['email'].value,
+      originID: localStorage.getItem("DESubToken")
     };
 
     this.authService.register(registerRequest).subscribe({

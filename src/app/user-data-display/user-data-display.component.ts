@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GroupedData } from '../grouped-data';
 import { subscribeOn } from 'rxjs';
+import { UserRole } from '../user-role';
 
 export interface EditData {
   Id: 0,
@@ -91,6 +92,7 @@ export class UserDataDisplayComponent implements OnInit {
   public editing: boolean = false;
   public editingID: number = -1;
   form!: FormGroup;
+  public userRole = ''
 
   panelStatus:boolean[] = [];
 
@@ -106,6 +108,8 @@ export class UserDataDisplayComponent implements OnInit {
     //   this.panelStatus.push(false);
     // });
     // console.log(this.panelStatus)
+
+    this.getUserRoles();
   }
 
   //DIALOG
@@ -186,6 +190,19 @@ export class UserDataDisplayComponent implements OnInit {
     this.http.delete(url).subscribe({
       next: (res) => {
         console.log("Entry Deleted");
+      },
+      error: (e) => console.error(e)
+    });
+  }
+
+  getUserRoles() {
+    let fetchedRole: UserRole[] = []
+    let url = `${environment.baseURL}api/Admin/GetUserRole`;
+    this.http.get<UserRole[]>(url).subscribe({
+      next: (res) => {
+        fetchedRole = res;
+        this.userRole = fetchedRole[0].value;
+        console.log(this.userRole);
       },
       error: (e) => console.error(e)
     });

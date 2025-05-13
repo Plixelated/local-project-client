@@ -27,7 +27,7 @@ export const routes: Routes = [
         component:AdminDashboardComponent
     },
     {
-        path:"dashboard",
+        path:"user",
         component:UserDashboardComponent
     },
     {

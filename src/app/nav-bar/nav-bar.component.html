@@ -10,9 +10,16 @@
                     <a [routerLink]="['/']" class="flex items-center hover:purple-500">
                         <button mat-menu-item>Home</button>
                     </a>
+                    @if (userRole.toLowerCase() === "admin"){
                     <a [routerLink]="['/admin']" class="flex items-center hover:purple-500">
                         <button mat-menu-item>Dashboard</button>
                     </a>
+                    }
+                    @else{
+                    <a [routerLink]="['/user']" class="flex items-center hover:purple-500">
+                        <button mat-menu-item>Dashboard</button>
+                    </a>
+                    }
                     <button mat-menu-item (click)="logout()">Logout</button>
                 </mat-menu>
 

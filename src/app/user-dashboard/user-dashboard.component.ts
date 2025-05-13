@@ -10,10 +10,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { GroupedSubmission } from '../grouped-submission';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UserDataDisplayComponent } from '../user-data-display/user-data-display.component';
 
 @Component({
   selector: 'app-user-dashboard',
-  imports: [],
+  imports: [
+        ReactiveFormsModule,
+        DataChartComponent,
+        MatExpansionModule,
+        MatIconModule,
+        MatButtonModule,
+        UserDataDisplayComponent
+  ],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.scss'
 })
@@ -47,8 +55,6 @@ export class UserDashboardComponent implements OnInit {
       this.getFlatDataset();
       this.getFilteredDataset();
     });
-
-    this.getUserRoles();
     //Use to generate calculation
     this.getFlatDataset();
     //Use to get data to display
@@ -95,16 +101,6 @@ export class UserDashboardComponent implements OnInit {
         this._dataset = res;
         this.title = filters.variableFilter.toUpperCase();
         this.dataset = this._dataset;
-      },
-      error: (e) => console.error(e)
-    });
-  }
-
-  getUserRoles() {
-    let url = `${environment.baseURL}api/Admin/GetUsreRole`;
-    this.http.get(url).subscribe({
-      next: (res) => {
-        console.log(res)
       },
       error: (e) => console.error(e)
     });
