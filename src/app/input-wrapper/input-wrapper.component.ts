@@ -15,6 +15,7 @@ import { RawData } from '../raw-data';
 })
 export class InputWrapperComponent {
 
+  //DI
   constructor(private http: HttpClient, private activatedRoute: ActivatedRoute){}
 
   //Gets Child Component
@@ -23,40 +24,46 @@ export class InputWrapperComponent {
   //Import Data
   configData = configData;
   textData = textData;
-
+  //Set Calculation Value
   calculation = 1;
+  //Display Final Calculation UI Object
   reveal = false;
 
-
+  //Retrieves Objects from children components
   getAllValues(){
     //Dict Value to store in JSON
     const result: Record<string,number>={}
     let total = 1;
-
+    //Loop through each input and grab the value
     this.sliderInputs.forEach(input => {
       result[input.config.label] = input.rangeValue();
       total *= input.rangeValue();
   });
-
+    //Calculate total
     this.calculation = total;
+    //Reveal UI Element
     this.reveal = this.calculation > 1;
 
     console.log(result);
     // console.log(this.calculation)
 
+    //Post Values to backend
     this.submitValues(result);
 
     return result;
   }
 
   submitValues(results: Record<string,number>){
-    
+    //Create a unique Identifier if the user doesn't already have one
+    //This helps to identify if a user has create mulitple submissions
+    //Without the need to sign up for an account
     let localToken = localStorage.getItem("DESubToken");
     if (!localToken) {
       localToken = uuidv4();
       localStorage.setItem("DESubToken", localToken);
     }
 
+    //Create a submission object of type RawData
     const submission : RawData = {
       rateStars: results["r*"],
       frequencyPlanets: results["fp"],
@@ -69,6 +76,8 @@ export class InputWrapperComponent {
     }
 
     console.log(submission);
+    
+    //Post it to the Endpoint
     this.http.post(`${environment.baseURL}api/Submission/CreateSubmission`, submission, { responseType: 'text' }).subscribe({
       next:(res) =>{
         console.log(res + submission.entryOrigin)

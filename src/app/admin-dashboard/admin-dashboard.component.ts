@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Filters } from './filters';
+import { Filters } from '../filters';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { FilteredData } from '../filtered-data';
