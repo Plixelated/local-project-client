@@ -4,9 +4,10 @@ import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginRequest } from './login-request';
 import { AuthService } from './auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { OriginID } from '../origin-id';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ import { OriginID } from '../origin-id';
 export class LoginComponent implements OnInit {
   form!: FormGroup; //Will be defined
 
-  constructor(private authService: AuthService, private router: Router, private http:HttpClient) { }
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     //Initialize Form
@@ -53,10 +54,16 @@ export class LoginComponent implements OnInit {
     let url = `${environment.baseURL}api/Admin/GetUserOriginID`;
     this.http.get<OriginID>(url).subscribe({
       next: (res) => {
-        let originID:OriginID = res;
-        localStorage.setItem("DESubToken",originID.entryOrigin);
+        let originID: OriginID = res;
+        localStorage.setItem("DESubToken", originID.entryOrigin);
       },
-      error: (e) => console.error(e)
+      error: (e => {
+        if (e instanceof HttpErrorResponse && e.status === 400) {
+          //ADD LOGIC TO FIX BROKEN CONNECTION
+          console.log("No Remote Token");
+          throwError(() => e);
+        }
+      })
     });
   }
 }

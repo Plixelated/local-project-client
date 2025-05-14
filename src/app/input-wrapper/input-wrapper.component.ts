@@ -39,9 +39,7 @@ export class InputWrapperComponent {
     this.sliderInputs.forEach(input => {
       let value = input.rangeValue();
       result[input.config.label] = value;
-
-      console.log(input);
-
+      
       if (input.formatting.isPercent === true) {
         value /= 100;
       }
