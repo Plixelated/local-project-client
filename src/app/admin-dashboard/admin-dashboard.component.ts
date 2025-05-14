@@ -76,7 +76,12 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
         this.userData = [];
         setTimeout(() => { this.userData = res });
 
+        //Use to generate calculation
+        this.getFlatDataset();
+        //Use to get data to display
         this.getFilteredDataset();
+        //Use to get data for user info
+        this.getUserData();
       },
       error: (e) => console.log(e)
     });

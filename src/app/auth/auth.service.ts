@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { RegisterRequest } from './register-request';
 import { RegisterResponse } from './register-response';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'

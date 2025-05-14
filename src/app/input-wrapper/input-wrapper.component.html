@@ -4,6 +4,7 @@
         <app-input-slider
         [config]="config" 
         [labels]="textData[i]"
+        [formatting]="formatData[i]"
         />
       }
     </div>
@@ -24,9 +25,9 @@
   </div>
     @if (reveal){
     <div class="flex justify-center text-center text-sm">
-      <span>There are 
-      <b class="text-purple-500 text-md">{{calculation}}</b> 
-      potential stars systems with life in it. </span>
+      <span>There are potentially
+      <b class="text-purple-500 text-md">{{calculation.toLocaleString()}}</b> 
+     stars systems with life in it. </span>
     </div>
     }
   </div>

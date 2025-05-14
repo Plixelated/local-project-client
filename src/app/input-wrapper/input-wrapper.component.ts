@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { InputSliderComponent } from "../input-slider/input-slider.component";
-import { textData,configData } from "../data/data"
+import { textData, configData, formatData } from "../data/data"
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Data } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -16,7 +16,7 @@ import { RawData } from '../raw-data';
 export class InputWrapperComponent {
 
   //DI
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute){}
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
 
   //Gets Child Component
   @ViewChildren(InputSliderComponent) sliderInputs!: QueryList<InputSliderComponent>;
@@ -24,21 +24,29 @@ export class InputWrapperComponent {
   //Import Data
   configData = configData;
   textData = textData;
+  formatData = formatData;
   //Set Calculation Value
   calculation = 1;
   //Display Final Calculation UI Object
   reveal = false;
 
   //Retrieves Objects from children components
-  getAllValues(){
+  getAllValues() {
     //Dict Value to store in JSON
-    const result: Record<string,number>={}
+    const result: Record<string, number> = {}
     let total = 1;
     //Loop through each input and grab the value
     this.sliderInputs.forEach(input => {
-      result[input.config.label] = input.rangeValue();
-      total *= input.rangeValue();
-  });
+      let value = input.rangeValue();
+      result[input.config.label] = value;
+
+      console.log(input);
+
+      if (input.formatting.isPercent === true) {
+        value /= 100;
+      }
+      total *= value;
+    });
     //Calculate total
     this.calculation = total;
     //Reveal UI Element
@@ -53,7 +61,7 @@ export class InputWrapperComponent {
     return result;
   }
 
-  submitValues(results: Record<string,number>){
+  submitValues(results: Record<string, number>) {
     //Create a unique Identifier if the user doesn't already have one
     //This helps to identify if a user has create mulitple submissions
     //Without the need to sign up for an account
@@ -64,25 +72,25 @@ export class InputWrapperComponent {
     }
 
     //Create a submission object of type RawData
-    const submission : RawData = {
+    const submission: RawData = {
       rateStars: results["r*"],
       frequencyPlanets: results["fp"],
       nearEarth: results["ne"],
-      fractionLife: results["fl"],
-      fractionIntelligence: results["fi"],
-      fractionCommunication: results["fc"],
+      fractionLife: results["fl"] / 100,
+      fractionIntelligence: results["fi"] / 100,
+      fractionCommunication: results["fc"] / 100,
       length: results["L"],
       entryOrigin: localToken
     }
 
     console.log(submission);
-    
+
     //Post it to the Endpoint
     this.http.post(`${environment.baseURL}api/Submission/CreateSubmission`, submission, { responseType: 'text' }).subscribe({
-      next:(res) =>{
+      next: (res) => {
         console.log(res + submission.entryOrigin)
       },
-      error:(e) => console.error(e)
+      error: (e) => console.error(e)
     })
 
   }

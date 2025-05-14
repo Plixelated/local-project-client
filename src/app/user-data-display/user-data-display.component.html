@@ -4,7 +4,7 @@
             @for (data of userData; track data; let i = $index){
             <li class="my-4">
                 <mat-accordion>
-                    <mat-expansion-panel class="w-xl">
+                    <mat-expansion-panel class="w-xl" [expanded]="expanded">
                         <mat-expansion-panel-header>
                             <mat-panel-title class="text-sm"> Submission: </mat-panel-title>
                             <mat-panel-description class="text-sm">{{data.originID}}</mat-panel-description>
@@ -45,7 +45,7 @@
                                         <td class="px-3 text-center">{{ item.f_l }}</td>
                                         <td class="px-3 text-center">{{ item.f_i }}</td>
                                         <td class="px-3 text-center">{{ item.f_c }}</td>
-                                        <td class="px-3 text-center">{{ item.l }}</td>
+                                        <td class="px-3 text-center">{{ item.l.toLocaleString() }}</td>
 
                                         <!-- @if(!editing|| editingID != item.id){ -->
                                         <button mat-mini-fab (click)="delete(data.originID,item.id)"

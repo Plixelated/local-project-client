@@ -88,6 +88,7 @@ export class EditDialog {
 })
 export class UserDataDisplayComponent implements OnInit {
   @Input() userData: GroupedSubmission[] = [];
+  @Input() expanded: boolean = false;
 
   public editing: boolean = false;
   public editingID: number = -1;

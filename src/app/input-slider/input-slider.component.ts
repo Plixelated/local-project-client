@@ -33,7 +33,7 @@ export class InputSliderComponent implements OnInit {
     //Set Range Value Signal
     rangeValue = signal(50);
     //Calculates Signal's Input value
-    label = computed(()=> `${this.rangeValue()}`);
+    label = computed(()=> `${this.rangeValue().toLocaleString()}`);
 
     ngOnInit(): void {
       //Set it to either a preconfigured default value via the config object
