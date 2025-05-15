@@ -20,11 +20,11 @@ export class AppComponent {
     //Set Page Title
     titleService.setTitle(this.title);
     //Check if a local originID exists
-    const localOriginID = localStorage.getItem("DESubToken");
+    const localOriginID = localStorage.getItem("OriginID");
     //If not assign one using a UUID
     if (!localOriginID) {
       const originID = uuidv4();
-      localStorage.setItem("DESubToken", originID);
+      localStorage.setItem("OriginID", originID);
     }
   }
 }

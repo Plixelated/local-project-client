@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
       userName: this.form.controls['userName'].value,
       password: this.form.controls['password'].value,
       email: this.form.controls['email'].value,
-      originID: localStorage.getItem("DESubToken")
+      originID: localStorage.getItem("OriginID")
     };
 
     //Subscribe to Auth Service Register Observable
