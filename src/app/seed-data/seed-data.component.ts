@@ -14,6 +14,10 @@ export class SeedDataComponent {
   seedQty: number = 0;
 
   constructor(private http: HttpClient) { }
+
+  //Seeds Data when logged in as an admin
+  //For Use when Deployed and no access to Swagger
+  
   seedRoles() {
     let url = `${environment.baseURL}api/Seed/roles`;
     this.http.post(url, {}).subscribe({

@@ -45,10 +45,11 @@ export class InputSliderComponent implements OnInit {
     }
     
     //When Range Input Value Changes
-    //Update this to use subscribe instead
+    //Update this to use subscribe instead?
     onValueChange(event:Event){
-      
+      //Set signal to changed input's value
       this.rangeValue.set(+(event.target as HTMLInputElement).value);
+      //Emit Changed value to label
       this.valueChange.emit({label:this.config.label, value:this.rangeValue()});
       //console.log(`${this.config.label}: ${this.rangeValue()}`)
     }

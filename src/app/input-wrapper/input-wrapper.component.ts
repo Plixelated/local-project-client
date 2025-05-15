@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Data } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { v4 as uuidv4 } from 'uuid';
-import { RawData } from '../raw-data';
+import { RawData } from '../interfaces/raw-data';
 
 @Component({
   selector: 'app-input-wrapper',
@@ -14,11 +14,9 @@ import { RawData } from '../raw-data';
   styleUrl: './input-wrapper.component.scss'
 })
 export class InputWrapperComponent {
-
   //DI
   constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
-
-  //Gets Child Component
+  //Get Children Components
   @ViewChildren(InputSliderComponent) sliderInputs!: QueryList<InputSliderComponent>;
 
   //Import Data
@@ -37,12 +35,15 @@ export class InputWrapperComponent {
     let total = 1;
     //Loop through each input and grab the value
     this.sliderInputs.forEach(input => {
+      //get value from emitted signal
       let value = input.rangeValue();
+      //Sets display label to value
       result[input.config.label] = value;
-      
+      //If the value is a percent
       if (input.formatting.isPercent === true) {
         value /= 100;
       }
+      //Calculate the total
       total *= value;
     });
     //Calculate total
@@ -51,7 +52,6 @@ export class InputWrapperComponent {
     this.reveal = this.calculation > 1;
 
     console.log(result);
-    // console.log(this.calculation)
 
     //Post Values to backend
     this.submitValues(result);
@@ -81,9 +81,10 @@ export class InputWrapperComponent {
       entryOrigin: localToken
     }
 
+    //Log Submission
     console.log(submission);
 
-    //Post it to the Endpoint
+    //POST request
     this.http.post(`${environment.baseURL}api/Submission/CreateSubmission`, submission, { responseType: 'text' }).subscribe({
       next: (res) => {
         console.log(res + submission.entryOrigin)

@@ -17,11 +17,14 @@ export class AppComponent {
   title:string = 'The Drake Equation';
 
   constructor(private titleService: Title) {
+    //Set Page Title
     titleService.setTitle(this.title);
-    const localToken = localStorage.getItem("DESubToken");
-    if (!localToken) {
-      const submission_token = uuidv4();
-      localStorage.setItem("DESubToken", submission_token);
+    //Check if a local originID exists
+    const localOriginID = localStorage.getItem("DESubToken");
+    //If not assign one using a UUID
+    if (!localOriginID) {
+      const originID = uuidv4();
+      localStorage.setItem("DESubToken", originID);
     }
   }
 }

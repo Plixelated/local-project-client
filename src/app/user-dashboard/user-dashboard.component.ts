@@ -1,19 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Filters } from '../filters';
+import { Filters } from '../interfaces/filters';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { FilteredData } from '../filtered-data';
-import { FlatData } from '../flat-data';
+import { FlatData } from '../interfaces/flat-data';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { GroupedSubmission } from '../grouped-submission';
+import { GroupedSubmission } from '../interfaces/grouped-submission';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserDataDisplayComponent } from '../user-data-display/user-data-display.component';
-import { RawData } from '../raw-data';
-import { GroupedData } from '../grouped-data';
 import * as SignalR from "@microsoft/signalr";
 import { HubConnection } from "@microsoft/signalr";
-import { HubService } from '../hub.service';
+import { HubService } from '../hub/hub.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -27,14 +24,10 @@ import { HubService } from '../hub.service';
   styleUrl: './user-dashboard.component.scss'
 })
 export class UserDashboardComponent implements OnInit, OnDestroy {
+  //Calculated Value to display
   public calculation: number = 0;
-  public role = '';
-
-  dataset: FilteredData[] = [];
+  //Stores retrieved user data, sent to User Data Display Child
   userData: GroupedSubmission[] = [];
-  userSubmissions: GroupedSubmission | undefined;
-
-  title: string = "";
 
   constructor(
     private http: HttpClient,
@@ -51,12 +44,14 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
     this.hubService.getData().subscribe({
       next: (res) => {
+        //Notify on valid update
         console.log("Update Received");
+        console.log(res)
+        //Reset User Data
         this.userData = [];
+        //Update User data after a slight delay
+        //This prevents NG0956 error
         setTimeout(() => { this.userData = res });
-
-        //Use to get data for user info
-        this.getUserData();
         //Use to generate calculation
         this.getFlatDataset();
         //Use to get data for user info
@@ -67,31 +62,45 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
   }
 
+  //Disconnect from hub service
   ngOnDestroy(): void {
     this.hubService.disconnect();
   }
 
   getFlatDataset() {
-    //USE FOR CALCULATION
+    //Create filter object to send
     let filters = <Filters>{
       variableFilter: "all",
       operationFilter: "avg"
     }
+    //API URL
     let url = `${environment.baseURL}api/Data/GetFlatDataset`;
+    //POST request
     this.http.post<FlatData>(url, filters).subscribe({
       next: (res) => {
-        this.calculation = Object.values(res).reduce((acc, curr) => acc * curr, 1);
+        this.calculation = 1;
+        //Loop through the flat data
+        //Calculate the total, and if its a percent value
+        //Divide by 100
+        Object.entries(res).forEach(([key,value]) => {
+          if (key.startsWith("f_")){
+            value /= 100;
+          }
+          this.calculation *= value;
+        });
       },
       error: (e) => console.error(e)
     });
   }
 
   getUserData() {
+    //API URL
     let url = `${environment.baseURL}api/Data/GetUserSubmissions`;
+    //GET request
     this.http.get<GroupedSubmission[]>(url).subscribe({
       next: (res) => {
+        //Sets User Data for the User Data Display Child Component
         this.userData = res;
-        console.log(this.userData);
       },
       error: (e) => console.error(e)
     });

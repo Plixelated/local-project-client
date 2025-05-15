@@ -6,7 +6,7 @@ import { LoginRequest } from './login-request';
 import { AuthService } from './auth.service';
 import { RegisterRequest } from './register-request';
 import { environment } from '../../environments/environment';
-import { OriginID } from '../origin-id';
+import { OriginID } from '../interfaces/origin-id';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup; //Will be defined
   
   constructor(private authService:AuthService, private router:Router, private http:HttpClient){}
-
+  //Registration Successful
   public success: boolean = false;
 
   ngOnInit(): void {
@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    //Create RegisterRequest Object to send
     let registerRequest = <RegisterRequest>{
       userName: this.form.controls['userName'].value,
       password: this.form.controls['password'].value,
@@ -42,14 +43,19 @@ export class RegisterComponent implements OnInit {
       originID: localStorage.getItem("DESubToken")
     };
 
+    //Subscribe to Auth Service Register Observable
+    //TODO: Add feedback for malformed registration request
     this.authService.register(registerRequest).subscribe({
       next: (res) =>{
+        //If successful
         if (res.success){
+          //Reste Forms
           this.form.controls['userName'].reset();
           this.form.controls['password'].reset();
           this.form.controls['email'].reset();
+          //Toggle success message
           this.success = true;
-
+          //Redirect user to login after 2s
           setTimeout(() => {
             this.router.navigate(["/login"]);
           }, 2000);

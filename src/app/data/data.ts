@@ -1,3 +1,4 @@
+//Contains Text, Configuration, and Formatting Data for slider inputs
 export const textData = [
         {title:'What is the rate of star formation in a galaxy?' , 
           desc: `
