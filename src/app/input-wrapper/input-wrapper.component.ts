@@ -72,7 +72,7 @@ export class InputWrapperComponent {
     //Create a submission object of type RawData
     const submission: RawData = {
       rateStars: results["r*"],
-      frequencyPlanets: results["fp"],
+      frequencyPlanets: results["fp"] / 100, 
       nearEarth: results["ne"],
       fractionLife: results["fl"] / 100,
       fractionIntelligence: results["fi"] / 100,

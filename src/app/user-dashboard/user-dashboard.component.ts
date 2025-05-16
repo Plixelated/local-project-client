@@ -79,13 +79,9 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
     this.http.post<FlatData>(url, filters).subscribe({
       next: (res) => {
         this.calculation = 1;
-        //Loop through the flat data
-        //Calculate the total, and if its a percent value
-        //Divide by 100
-        Object.entries(res).forEach(([key,value]) => {
-          if (key.startsWith("f_")){
-            value /= 100;
-          }
+        //Loops through flat dataset and performs calculation
+        //To get the total value of the aggregated data
+        Object.values(res).forEach(value => {
           this.calculation *= value;
         });
       },
