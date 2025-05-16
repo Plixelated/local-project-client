@@ -1,4 +1,12 @@
 //Contains Text, Configuration, and Formatting Data for slider inputs
+export const introData=[
+  {text: `The Drake equation is a probabilistic argument used to estimate 
+    the number of active, communicative extraterrestrial civilizations in 
+    the Milky Way Galaxy.The equation was formulated in 1961 by Frank Drake, 
+    not for purposes of quantifying the number of civilizations, but as a 
+    way to stimulate scientific dialogue at the first scientific meeting on 
+    the search for extraterrestrial intelligence (SETI).`}
+]
 export const textData = [
         {title:'What is the rate of star formation in a galaxy?' , 
           desc: `

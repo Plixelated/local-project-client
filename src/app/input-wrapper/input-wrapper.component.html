@@ -1,16 +1,19 @@
-<div>
-  <div class="py-10 container">
-      @for (config of configData; let i = $index; track config){
-        <app-input-slider
-        [config]="config" 
-        [labels]="textData[i]"
-        [formatting]="formatData[i]"
-        />
-      }
-    </div>
-    <div class="flex flex-col w-screen items-center justify-center my-10">
-    <div class="flex justify-center mb-6">
-      <button class="bg-transparent 
+<div class="py-5">
+  <div class="flex flex-col w-screen items-center justify-center">
+    <h1 class="text-3xl">
+      <b> Are We Alone? </b>
+    </h1>
+    <span class="pt-4 w-3/4 text-center">{{intro[0].text}}</span>
+  </div>
+  <div class="container">
+    @for (config of configData; let i = $index; track config){
+    <app-input-slider [config]="config" [labels]="textData[i]" [formatting]="formatData[i]" />
+    }
+  </div>
+
+  <div class="flex flex-col w-screen items-center justify-center pb-10">
+
+    <button class="bg-transparent 
       text-purple-500 
       font-semibold 
       hover:bg-purple-500 
@@ -19,16 +22,19 @@
       border 
       border-purple-500 
       hover:border-transparent 
+      mb-8
       rounded" (click)="getAllValues()">
       FIND LIFE
-      </button>
-  </div>
+    </button>
+
     @if (reveal){
-    <div class="flex justify-center text-center text-sm">
+    <div class="text-center text-md">
       <span>There are potentially
-      <b class="text-purple-500 text-md">{{calculation.toLocaleString()}}</b> 
-     stars systems with life in it. </span>
+        <b class="text-purple-500 text-md">{{calculation.toLocaleString()}}</b>
+        stars systems with life in it. </span>
     </div>
     }
+
   </div>
+
 </div>

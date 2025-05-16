@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { InputSliderComponent } from "../input-slider/input-slider.component";
-import { textData, configData, formatData } from "../data/data"
+import { textData, configData, formatData, introData } from "../data/data"
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Data } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -23,6 +23,7 @@ export class InputWrapperComponent {
   configData = configData;
   textData = textData;
   formatData = formatData;
+  intro = introData;
   //Set Calculation Value
   calculation = 1;
   //Display Final Calculation UI Object
