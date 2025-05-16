@@ -63,10 +63,10 @@ export class InputWrapperComponent {
     //Create a unique Identifier if the user doesn't already have one
     //This helps to identify if a user has create mulitple submissions
     //Without the need to sign up for an account
-    let localToken = localStorage.getItem("DESubToken");
+    let localToken = localStorage.getItem("OriginID");
     if (!localToken) {
       localToken = uuidv4();
-      localStorage.setItem("DESubToken", localToken);
+      localStorage.setItem("OriginID", localToken);
     }
 
     //Create a submission object of type RawData
