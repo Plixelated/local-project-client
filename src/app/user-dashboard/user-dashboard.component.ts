@@ -51,7 +51,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
         this.userData = [];
         //Update User data after a slight delay
         //This prevents NG0956 error
-        setTimeout(() => { this.userData = res });
+        //setTimeout(() => { this.userData = res });
         //Use to generate calculation
         this.getFlatDataset();
         //Use to get data for user info
