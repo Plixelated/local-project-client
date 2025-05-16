@@ -1,9 +1,11 @@
 <div class="flex flex-col justify-center items-center m-5 w-screen">
-    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedRoles()">Roles</button>
-    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedAdminClaims()">Admin Claims</button>
-    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedResearcherClaims()">Researcher
-        Claims</button>
+    <h4>Seed Authorization</h4>
+    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedRoles()">Seed Roles</button>
+    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedAdminClaims()">Seed Admin Claims</button>
+    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedResearcherClaims()">Seed Researcher Claims</button>
+    <button class="bg-purple-900 rounded-lg p-3 my-2" (click)="seedUserClaims()">Seed User Claims</button>
 
+    <h4>Seed Data</h4>
     <div class="flex flex-row px-2 items-center">
         <span class="text-center mr-2">Seed Qty:</span>
         <input type="number" class="border border-purple-500 w-16 text-center p-2" [(ngModel)]="seedQty" />

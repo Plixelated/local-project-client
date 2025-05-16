@@ -41,6 +41,14 @@ export class SeedDataComponent {
     });
   }
 
+  seedUserClaims() {
+    let url = `${environment.baseURL}api/Seed/UserClaims`;
+    this.http.post(url, {}).subscribe({
+      next: (res) => console.log(res),
+      error: (e) => console.error(e)
+    });
+  }
+
   seedData(){
     let url = `${environment.baseURL}api/Seed/RandomData/${this.seedQty}`;
     this.http.post(url, {}).subscribe({
